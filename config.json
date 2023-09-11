@@ -1,0 +1,5 @@
+{
+  "backend_server_host": "localhost",
+  "backend_server_port": 8080,
+  "device_id": 0
+}
