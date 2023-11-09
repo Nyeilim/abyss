@@ -12,14 +12,14 @@ ENV PATH /env/bin:$PATH
 
 RUN apt-get update && apt-get install -y python-opencv
 
-# Copy the application's requirements.txt and run pip to install all
+# Copy the application's requirement.txt and run pip to install all
 # dependencies into the virtualenv.
 ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+RUN pip install -r /app/requirement.txt
 
 # Add the application source code.
 ADD . /app
 
 # Run a WSGI server to serve the application. gunicorn must be declared as
-# a dependency in requirements.txt.
+# a dependency in requirement.txt.
 CMD gunicorn -b :$PORT main:app

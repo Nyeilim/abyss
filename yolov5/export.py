@@ -18,8 +18,8 @@ TensorFlow.js               | `tfjs`                        | yolov5s_web_model/
 PaddlePaddle                | `paddle`                      | yolov5s_paddle_model/
 
 Requirements:
-    $ pip install -r requirements.txt coremltools onnx onnx-simplifier onnxruntime openvino-dev tensorflow-cpu  # CPU
-    $ pip install -r requirements.txt coremltools onnx onnx-simplifier onnxruntime-gpu openvino-dev tensorflow  # GPU
+    $ pip install -r requirement.txt coremltools onnx onnx-simplifier onnxruntime openvino-dev tensorflow-cpu  # CPU
+    $ pip install -r requirement.txt coremltools onnx onnx-simplifier onnxruntime-gpu openvino-dev tensorflow  # GPU
 
 Usage:
     $ python export.py --weights yolov5s.pt --include torchscript onnx openvino engine coreml tflite ...
