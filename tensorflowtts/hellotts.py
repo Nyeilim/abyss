@@ -1,3 +1,4 @@
+# 依赖安装不了
 import numpy as np
 import soundfile as sf
 import yaml
