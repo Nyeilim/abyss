@@ -99,6 +99,7 @@ def run(
     # Load model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data, fp16=half)
+    # names 被赋值为 model.names，这是一个包含所有标签名称的列表
     stride, names, pt = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)  # check image size
 
@@ -170,13 +171,21 @@ def run(
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
 
                 # Print results
+                tts_text = ""
                 for c in det[:, 5].unique():
                     n = (det[:, 5] == c).sum()  # detections per class
+                    # 在这个地方追加上标签信息, 如 5 person, 1 laptop
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
+                    tts_text += f"{n} {names[int(c)]}{'s' * (n > 1)}, "
+
+                # TODO: 这段文本传送给 TTS 即可
+                tts_text = tts_text.rstrip(", ")
+                print("tts text: " + tts_text)
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     c = int(cls)  # integer class
+                    # 这个标签就是显示的结果, 比如 person
                     label = names[c] if hide_conf else f'{names[c]}'
                     confidence = float(conf)
                     confidence_str = f'{confidence:.2f}'
@@ -227,6 +236,7 @@ def run(
                     vid_writer[i].write(im0)
 
         # Print time (inference-only)
+        # 0: 480x640 6 persons, 1 laptop, 266.5ms 类似这样的输出就是在这里打印出来的, s 就是前面的信息
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
 
     # Print results
