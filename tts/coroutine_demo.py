@@ -1,4 +1,19 @@
 import asyncio
+import random
+
+# 全局变量
+tts_texts = []
+
+# 模仿模型处理流程
+def model_procession():
+    while True:
+        tts_text = 'Hello, Class ' + str(random.randint(1, 10))
+        print(tts_text)
+        add_tts_task(tts_text)
+
+
+def add_tts_task(text):
+    asyncio.create_task(func(), name="创建的任务别名1")
 
 
 def callback_func(task):
