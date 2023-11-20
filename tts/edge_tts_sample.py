@@ -42,6 +42,7 @@ def getXTime():
     return fr(str(now.year)) + '-' + fr(str(now.month)) + '-' + fr(str(now.day)) + 'T' + fr(hr_cr(int(now.hour))) + ':' + fr(str(now.minute)) + ':' + fr(str(now.second)) + '.' + str(now.microsecond)[:3] + 'Z'
 
 # Async function for actually communicating with the websocket
+# 发送请求的逻辑
 async def transferMsTTSData(SSML_text, outputPath):
     req_id = uuid.uuid4().hex.upper()
     print(req_id)

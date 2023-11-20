@@ -1,8 +1,18 @@
 import asyncio
+import logging
+import queue
 import random
+import time
+
+import aiohttp
 
 # 全局变量
-tts_texts = []
+LOGGER = logging.getLogger("tts")
+TIME_INTERVAL = 5
+tts_texts = asyncio.Queue()
+text_cache = ""
+last_submit_time = int(time.time())
+
 
 # 模仿模型处理流程
 def model_procession():
@@ -10,6 +20,50 @@ def model_procession():
         tts_text = 'Hello, Class ' + str(random.randint(1, 10))
         print(tts_text)
         add_tts_task(tts_text)
+
+
+def put_tts_text(text):
+    cur_time = int(time.time())
+    if cur_time - last_submit_time > TIME_INTERVAL and text_cache != text:
+        tts_texts.put(text)
+    else:
+        LOGGER.info(f"text submitted recently, cancel request. args: {text}")
+
+
+def get_tts_text():
+    if tts_texts.empty():
+        return None
+    else:
+        return tts_texts.get()
+
+# 构造 URL
+
+
+
+# 调用声卡说话
+def broadcast():
+    pass
+
+
+async def make_request(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            data = await response.text()
+            broadcast()
+
+
+async def main():
+    while True:
+        # 持续获取标签文本
+        tts_text = get_tts_text()
+        if tts_text is None:
+            continue
+
+        url = construct_url(tts_text)  # 构造请求URL
+        await make_request(url)  # 发起HTTP请求
+
+
+asyncio.run(main())
 
 
 def add_tts_task(text):
