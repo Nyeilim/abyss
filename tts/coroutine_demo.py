@@ -1,11 +1,11 @@
 import asyncio
 import random
 
-from tts_utils import gen_ssml
-from tts_utils import get_tts_text
-from tts_utils import put_tts_text
-from tts_utils import transfer_data
-from tts_utils import LOGGER
+from edge_tts_utils import gen_ssml
+from edge_tts_utils import get_tts_text
+from edge_tts_utils import put_tts_text
+from edge_tts_utils import transfer_data
+from edge_tts_utils import LOGGER
 
 
 # 模仿模型处理流程
