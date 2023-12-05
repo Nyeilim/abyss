@@ -1,6 +1,7 @@
-import pyttsx3
-import time
 import logging
+import time
+
+import pyttsx3
 
 # 日志
 LOGGER = logging.getLogger("tts")
@@ -19,27 +20,25 @@ engine.setProperty('volume', volume)
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)  # voices[0].id 是中文, voices[1].id 是英文
 
-# 全局列表，用于存储来自其他进程的数据
-texts = []
-
 
 def say(text):
-    engine.say(text)
-    engine.runAndWait()
-    engine.stop()
+    # engine.say(text)
+    # engine.runAndWait()
+    # engine.stop()
+    LOGGER.info(f"[TTS] speak: {text}")
 
 
 # 监控进程的函数
-def monitor():
-    global texts
+def monitor(texts):
     while True:
         # 检查文本列表是否有数据
-        if texts:
+        if not texts.empty():
             # 从文本列表读取数据并处理
-            text = texts.pop(0)
-            LOGGER.info(f"Text Count: {len(texts)}")
-            LOGGER.info(f"Pop Text: {text}")
+            text = texts.get()
+            LOGGER.info(f"[TTS] pop text: {text}")
             say(text)
+            LOGGER.info(f"[TTS] text left: {texts.qsize()}")
         else:
             # 如果文本列表为空，可以选择挂起一段时间再继续检查
+            LOGGER.info(f"[TTS] sleeping...")
             time.sleep(1)
