@@ -30,7 +30,7 @@ def say(text):
 
 
 # 监控进程的函数
-def monitor_process():
+def monitor():
     global texts
     while True:
         # 检查文本列表是否有数据

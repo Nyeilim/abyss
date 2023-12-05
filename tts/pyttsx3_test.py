@@ -1,13 +1,13 @@
 import random
-import multiprocessing
-from pyttsx3_utils import texts, LOGGER, monitor_process
+import threading
+from pyttsx3_utils import texts, LOGGER, monitor
 
 if __name__ == '__main__':
-    # 创建并启动监控进程
-    monitor_process = multiprocessing.Process(target=monitor_process)
-    monitor_process.start()
+    # 创建并启动监控线程
+    monitor_thread = threading.Thread(target=monitor)
+    monitor_thread.start()
 
     while True:
-        tts_text = 'Hello, Class ' + str(random.randint(1, 10))
+        tts_text = 'Hello, Class ' + str(random.randint(1, 2))
         LOGGER.info(f"Add Text: {tts_text}")
         texts.append(tts_text)

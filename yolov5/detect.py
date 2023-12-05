@@ -34,6 +34,7 @@ import os
 import platform
 import sys
 from pathlib import Path
+from tts.pyttsx3_utils import say
 
 import torch
 
@@ -180,6 +181,10 @@ def run(
 
                 # TODO: 这段文本传送给 TTS 即可
                 tts_text = tts_text.rstrip(", ")
+                # tts_last = ""
+                # if tts_text != tts_last:
+                #     say(tts_text)
+                #     tts_last = tts_text
                 print("tts text: " + tts_text)
 
                 # Write results
